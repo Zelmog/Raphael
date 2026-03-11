@@ -192,6 +192,8 @@ def _compute_action_units(landmarks, w, h):
     aus["AU23"] = min(max((0.06 - au23_raw) / 0.03, 0.0), 1.0)
 
     # --- AU24: Lip Pressor ---
+    # AU24 co-activates with AU23 (both involve orbicularis oris muscle)
+    # but at lower intensity since pressing requires less effort than tightening.
     aus["AU24"] = aus["AU23"] * 0.8
 
     # --- AU25: Lips Part ---
@@ -214,6 +216,8 @@ def _compute_action_units(landmarks, w, h):
     right_corner_y = pt(_MOUTH_RIGHT)[1]
     asymmetry = abs(left_corner_y - right_corner_y) / face_height
     aus["AU12R"] = min(max(asymmetry / 0.02, 0.0), 1.0)
+    # AU14R (Dimpler) co-occurs with AU12R at reduced intensity because the
+    # buccinator activation in dimpling is secondary to the zygomatic pull.
     aus["AU14R"] = aus["AU12R"] * 0.7
 
     return aus
